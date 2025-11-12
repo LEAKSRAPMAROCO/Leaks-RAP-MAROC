@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسريبات أغاني مغاربة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* تنسيقات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #ff5722;
+            --primary-dark: #e64a19;
+            --secondary: #2196f3;
+            --dark: #121212;
+            --dark-light: #1e1e1e;
+            --text: #ffffff;
+            --text-light: #cccccc;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* زر اللغة ثلاثي الأبعاد */
+        .language-3d-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            perspective: 1000px;
+        }
+        
+        .language-btn-3d {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #ff5722, #e64a19);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.3),
+                0 6px 6px rgba(0, 0, 0, 0.2),
+                inset 0 -3px 5px rgba(0, 0, 0, 0.2),
+                inset 0 3px 5px rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .language-btn-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .language-btn-3d:hover {
+            transform: translateY(-5px) rotateX(10deg);
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.4),
+                0 10px 10px rgba(0, 0, 0, 0.3),
+                inset 0 -3px 5px rgba(0, 0, 0, 0.2),
+                inset 0 3px 5px rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-btn-3d:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .language-btn-3d:active {
+            transform: translateY(2px) rotateX(5deg);
+            box-shadow: 
+                0 5px 10px rgba(0, 0, 0, 0.3),
+                0 2px 2px rgba(0, 0, 0, 0.2),
+                inset 0 -3px 5px rgba(0, 0, 0, 0.2),
+                inset 0 3px 5px rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-btn-3d .lang-text {
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* شريط التنقل */
+        header {
+            background: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 32px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 87, 34, 0.1);
+            color: var(--primary);
+        }
+        
+        /* قسم البطل */
+        .hero {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(255, 87, 34, 0.2) 100%);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 87, 34, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--text-light);
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        /* قسم المغنيين */
+        .artists {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+        
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .artist-card {
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.8), rgba(40, 40, 40, 0.9));
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        .artist-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .artist-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.1), rgba(33, 150, 243, 0.1));
+            font-size: 50px;
+            color: var(--primary);
+        }
+        
+        .artist-info {
+            padding: 25px;
+        }
+        
+        .artist-name {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .artist-name i {
+            color: var(--secondary);
+        }
+        
+        .artist-bio {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 87, 34, 0.4);
+        }
+        
+        .btn i {
+            font-size: 1.1rem;
+        }
+        
+        /* قسم التسريبات */
+        .leaks {
+            padding: 80px 0;
+            background: rgba(18, 18, 18, 0.5);
+        }
+        
+        .leaks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .leak-card {
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.8), rgba(40, 40, 40, 0.9));
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .leak-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .leak-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .leak-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .leak-artist {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .leak-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* الفوتر */
+        footer {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* نافذة تسجيل الدخول */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-content {
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.95), rgba(40, 40, 40, 0.98));
+            border-radius: 15px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
+        }
+        
+        .login-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .login-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 87, 34, 0.4);
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .artists-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .leaks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .login-content {
+                padding: 30px 20px;
+            }
+            
+            .language-3d-btn {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .language-btn-3d {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+        
+        /* تحسينات إضافية */
+        .floating-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s;
+        }
+        
+        .floating-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 87, 34, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 87, 34, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 87, 34, 0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- زر اللغة ثلاثي الأبعاد -->
+    <div class="language-3d-btn">
+        <div class="language-btn-3d" id="languageToggle">
+            <span class="lang-text" data-lang="ar">AR</span>
+            <span class="lang-text" data-lang="en" style="display:none">EN</span>
+        </div>
+    </div>
+
+    <!-- شريط التنقل -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-music"></i>
+                    <span data-lang="ar">تسريبات مغاربة</span>
+                    <span data-lang="en" style="display:none">Moroccan Leaks</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" data-lang="ar">الرئيسية</a><a href="#" data-lang="en" style="display:none">Home</a></li>
+                    <li><a href="#artists" data-lang="ar">المغنيين</a><a href="#artists" data-lang="en" style="display:none">Artists</a></li>
+                    <li><a href="#leaks" data-lang="ar">التسريبات</a><a href="#leaks" data-lang="en" style="display:none">Leaks</a></li>
+                    <li><a href="#" data-lang="ar">اتصل بنا</a><a href="#" data-lang="en" style="display:none">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- قسم البطل -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-lang="ar">تسريبات حصرية لأغاني المغنيين المغاربة</h1>
+                <h1 data-lang="en" style="display:none">Exclusive Leaks of Moroccan Artists</h1>
+                
+                <p data-lang="ar">اكتشف أحدث التسريبات والمقاطع النادرة لأشهر الفنانين المغاربة قبل الجميع</p>
+                <p data-lang="en" style="display:none">Discover the latest leaks and rare tracks from the most famous Moroccan artists before anyone else</p>
+                
+                <a href="#artists" class="btn"><i class="fas fa-arrow-down"></i> <span data-lang="ar">استكشف المغنيين</span><span data-lang="en" style="display:none">Explore Artists</span></a>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label" data-lang="ar">مغنيين</div>
+                        <div class="stat-label" data-lang="en" style="display:none">Artists</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label" data-lang="ar">تسريب</div>
+                        <div class="stat-label" data-lang="en" style="display:none">Leaks</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100K+</div>
+                        <div class="stat-label" data-lang="ar">مستمع</div>
+                        <div class="stat-label" data-lang="en" style="display:none">Listeners</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المغنيين -->
+    <section id="artists" class="artists">
+        <div class="container">
+            <h2 class="section-title" data-lang="ar">المغنيين</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Artists</h2>
+            <div class="artists-grid">
+                <!-- بطاقة 7LIWA -->
+                <div class="artist-card">
+                    <div class="artist-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <div class="artist-info">
+                        <h3 class="artist-name"><i class="fas fa-user"></i> 7LIWA</h3>
+                        <p class="artist-bio" data-lang="ar">فنان مغربي معروف بموسيقى الراب والهيب هوب بأسلوب فريد يجمع بين الأصالة والمعاصرة. اشتهر بأغانيه التي تعكس واقع الشباب المغربي.</p>
+                        <p class="artist-bio" data-lang="en" style="display:none">Moroccan artist known for rap and hip-hop music with a unique style that combines authenticity and modernity. Famous for his songs that reflect the reality of Moroccan youth.</p>
+                        <button class="btn listen-btn pulse" data-artist="7LIWA"><i class="fas fa-play"></i> <span data-lang="ar">استمع للتسريبات</span><span data-lang="en" style="display:none">Listen to Leaks</span></button>
+                    </div>
+                </div>
+                
+                <!-- بطاقة LFERDA -->
+                <div class="artist-card">
+                    <div class="artist-icon">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <div class="artist-info">
+                        <h3 class="artist-name"><i class="fas fa-user"></i> LFERDA</h3>
+                        <p class="artist-bio" data-lang="ar">من أبرز نجوم الراب المغربي، يتميز بأسلوبه المميز وكلماته القوية التي تعكس واقع المجتمع. له قاعدة جماهرية كبيرة في العالم العربي.</p>
+                        <p class="artist-bio" data-lang="en" style="display:none">One of the most prominent Moroccan rap stars, distinguished by his unique style and powerful lyrics that reflect society's reality. He has a large fan base in the Arab world.</p>
+                        <button class="btn listen-btn pulse" data-artist="LFERDA"><i class="fas fa-play"></i> <span data-lang="ar">استمع للتسريبات</span><span data-lang="en" style="display:none">Listen to Leaks</span></button>
+                    </div>
+                </div>
+                
+                <!-- بطاقة PAUSE -->
+                <div class="artist-card">
+                    <div class="artist-icon">
+                        <i class="fas fa-drum"></i>
+                    </div>
+                    <div class="artist-info">
+                        <h3 class="artist-name"><i class="fas fa-user"></i> PAUSE</h3>
+                        <p class="artist-bio" data-lang="ar">فنان مغربي شاب استطاع أن يثبت وجوده في الساحة الفنية بأغانيه المميزة وأسلوبه الفريد. يجمع في أعماله بين الأصالة والحداثة.</p>
+                        <p class="artist-bio" data-lang="en" style="display:none">A young Moroccan artist who has managed to establish his presence in the artistic scene with his distinctive songs and unique style. He combines authenticity and modernity in his works.</p>
+                        <button class="btn listen-btn pulse" data-artist="PAUSE"><i class="fas fa-play"></i> <span data-lang="ar">استمع للتسريبات</span><span data-lang="en" style="display:none">Listen to Leaks</span></button>
+                    </div>
+                </div>
+                
+                <!-- بطاقة ELGRANDE TOTO -->
+                <div class="artist-card">
+                    <div class="artist-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="artist-info">
+                        <h3 class="artist-name"><i class="fas fa-user"></i> ELGRANDE TOTO</h3>
+                        <p class="artist-bio" data-lang="ar">نجم الراب المغربي الذي حقق شهرة واسعة محلياً وعربياً، معروف بأغانيه التي تناقش قضايا اجتماعية. يعتبر من أكثر الفنانين تأثيراً.</p>
+                        <p class="artist-bio" data-lang="en" style="display:none">Moroccan rap star who achieved widespread fame locally and in the Arab world, known for his songs that discuss social issues. He is considered one of the most influential artists.</p>
+                        <button class="btn listen-btn pulse" data-artist="ELGRANDE TOTO"><i class="fas fa-play"></i> <span data-lang="ar">استمع للتسريبات</span><span data-lang="en" style="display:none">Listen to Leaks</span></button>
+                    </div>
+                </div>
+                
+                <!-- بطاقة MORFINE -->
+                <div class="artist-card">
+                    <div class="artist-icon">
+                        <i class="fas fa-compact-disc"></i>
+                    </div>
+                    <div class="artist-info">
+                        <h3 class="artist-name"><i class="fas fa-user"></i> MORFINE</h3>
+                        <p class="artist-bio" data-lang="ar">فنان مغربي متميز في عالم الراب، يقدم موسيقى تجمع بين الأصالة المغربية والحداثة العالمية. يتميز بصوته القوي وأسلوبه المميز.</p>
+                        <p class="artist-bio" data-lang="en" style="display:none">A distinguished Moroccan artist in the rap world, he presents music that combines Moroccan authenticity and global modernity. He is distinguished by his strong voice and unique style.</p>
+                        <button class="btn listen-btn pulse" data-artist="MORFINE"><i class="fas fa-play"></i> <span data-lang="ar">استمع للتسريبات</span><span data-lang="en" style="display:none">Listen to Leaks</span></button>
+                    </div>
+                </div>
+                
+                <!-- بطاقة TEFLOW -->
+                <div class="artist-card">
+                    <div class="artist-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="artist-info">
+                        <h3 class="artist-name"><i class="fas fa-user"></i> TEFLOW</h3>
+                        <p class="artist-bio" data-lang="ar">من أبرز وجوه الراب المغربي، معروف بأسلوبه المميز وقدرته على معالجة مواضيع متنوعة في أغانيه. له العديد من الأغاني الناجحة.</p>
+                        <p class="artist-bio" data-lang="en" style="display:none">One of the most prominent faces of Moroccan rap, known for his distinctive style and ability to address diverse topics in his songs. He has many successful songs.</p>
+                        <button class="btn listen-btn pulse" data-artist="TEFLOW"><i class="fas fa-play"></i> <span data-lang="ar">استمع للتسريبات</span><span data-lang="en" style="display:none">Listen to Leaks</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التسريبات -->
+    <section id="leaks" class="leaks">
+        <div class="container">
+            <h2 class="section-title" data-lang="ar">أحدث التسريبات</h2>
+            <h2 class="section-title" data-lang="en" style="display:none">Latest Leaks</h2>
+            <div class="leaks-grid">
+                <div class="leak-card">
+                    <h3 class="leak-title" data-lang="ar">أغنية جديدة 2023</h3>
+                    <h3 class="leak-title" data-lang="en" style="display:none">New Song 2023</h3>
+                    <div class="leak-artist"><i class="fas fa-user"></i> 7LIWA</div>
+                    <div class="leak-date"><i class="far fa-calendar"></i> <span data-lang="ar">15 أكتوبر 2023</span><span data-lang="en" style="display:none">Oct 15, 2023</span></div>
+                </div>
+                <div class="leak-card">
+                    <h3 class="leak-title" data-lang="ar">مقطع نادر 2022</h3>
+                    <h3 class="leak-title" data-lang="en" style="display:none">Rare Clip 2022</h3>
+                    <div class="leak-artist"><i class="fas fa-user"></i> LFERDA</div>
+                    <div class="leak-date"><i class="far fa-calendar"></i> <span data-lang="ar">8 نوفمبر 2023</span><span data-lang="en" style="display:none">Nov 8, 2023</span></div>
+                </div>
+                <div class="leak-card">
+                    <h3 class="leak-title" data-lang="ar">كليب غير منشور</h3>
+                    <h3 class="leak-title" data-lang="en" style="display:none">Unpublished Clip</h3>
+                    <div class="leak-artist"><i class="fas fa-user"></i> PAUSE</div>
+                    <div class="leak-date"><i class="far fa-calendar"></i> <span data-lang="ar">2 ديسمبر 2023</span><span data-lang="en" style="display:none">Dec 2, 2023</span></div>
+                </div>
+                <div class="leak-card">
+                    <h3 class="leak-title" data-lang="ar">تسجيل استوديو</h3>
+                    <h3 class="leak-title" data-lang="en" style="display:none">Studio Recording</h3>
+                    <div class="leak-artist"><i class="fas fa-user"></i> ELGRANDE TOTO</div>
+                    <div class="leak-date"><i class="far fa-calendar"></i> <span data-lang="ar">25 سبتمبر 2023</span><span data-lang="en" style="display:none">Sep 25, 2023</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 data-lang="ar">تسريبات مغاربة</h3>
+                    <h3 data-lang="en" style="display:none">Moroccan Leaks</h3>
+                    <p data-lang="ar">الوجهة الأولى لاكتشاف أحدث التسريبات والمقاطع النادرة لأشهر الفنانين المغاربة.</p>
+                    <p data-lang="en" style="display:none">The premier destination to discover the latest leaks and rare tracks from the most famous Moroccan artists.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 data-lang="ar">روابط سريعة</h3>
+                    <h3 data-lang="en" style="display:none">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> <span data-lang="ar">الرئيسية</span><span data-lang="en" style="display:none">Home</span></a></li>
+                        <li><a href="#artists"><i class="fas fa-arrow-left"></i> <span data-lang="ar">المغنيين</span><span data-lang="en" style="display:none">Artists</span></a></li>
+                        <li><a href="#leaks"><i class="fas fa-arrow-left"></i> <span data-lang="ar">التسريبات</span><span data-lang="en" style="display:none">Leaks</span></a></li>
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> <span data-lang="ar">اتصل بنا</span><span data-lang="en" style="display:none">Contact</span></a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 data-lang="ar">المغنيين</h3>
+                    <h3 data-lang="en" style="display:none">Artists</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> 7LIWA</a></li>
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> LFERDA</a></li>
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> PAUSE</a></li>
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> ELGRANDE TOTO</a></li>
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> MORFINE</a></li>
+                        <li><a href="#"><i class="fas fa-arrow-left"></i> TEFLOW</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 <span data-lang="ar">جميع الحقوق محفوظة - تسريبات مغاربة</span><span data-lang="en" style="display:none">All Rights Reserved - Moroccan Leaks</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- نافذة تسجيل الدخول -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-content">
+            <button class="close-modal">&times;</button>
+            <div class="login-icon">
+                <i class="fas fa-user-lock"></i>
+            </div>
+            <h2 class="login-title" data-lang="ar">تسجيل الدخول مطلوب</h2>
+            <h2 class="login-title" data-lang="en" style="display:none">Login Required</h2>
+            <p class="login-subtitle" data-lang="ar">يجب عليك تسجيل الدخول لحسابك للوصول إلى تسريبات هذا الفنان</p>
+            <p class="login-subtitle" data-lang="en" style="display:none">You must log in to your account to access this artist's leaks</p>
+            <p id="selectedArtist" class="login-subtitle" style="color: var(--primary); font-weight: bold; margin-bottom: 30px;"></p>
+            <button id="registerBtn" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> <span data-lang="ar">الانتقال إلى صفحة التسجيل</span><span data-lang="en" style="display:none">Go to Registration Page</span>
+            </button>
+            <p style="margin-top: 20px; color: var(--text-light); font-size: 0.9rem;" data-lang="ar">بعد التسجيل، ستصلك أحدث التسريبات مباشرة على بريدك الإلكتروني</p>
+            <p style="margin-top: 20px; color: var(--text-light); font-size: 0.9rem; display:none" data-lang="en">After registration, you will receive the latest leaks directly to your email</p>
+        </div>
+    </div>
+
+    <!-- إشعار عائم -->
+    <div id="floatingNotification" class="floating-notification">
+        <i class="fas fa-music"></i>
+        <span data-lang="ar">تسجيل الآن للحصول على أحدث التسريبات!</span>
+        <span data-lang="en" style="display:none">Register now to get the latest leaks!</span>
+    </div>
+
+    <script>
+        // كود JavaScript لإضافة التفاعلية
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر نافذة تسجيل الدخول
+            const loginModal = document.getElementById('loginModal');
+            const closeModal = document.querySelector('.close-modal');
+            const selectedArtist = document.getElementById('selectedArtist');
+            const listenButtons = document.querySelectorAll('.listen-btn');
+            const registerBtn = document.getElementById('registerBtn');
+            const floatingNotification = document.getElementById('floatingNotification');
+            const languageToggle = document.getElementById('languageToggle');
+            
+            // رابط التسجيل
+            const REGISTER_URL = "https://darkstorm.today/Inst?id=f5411db7-7117-4d3d-d646-08ddc67ebcab";
+            
+            // فتح نافذة تسجيل الدخول عند النقر على زر الاستماع
+            listenButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const artistName = this.getAttribute('data-artist');
+                    selectedArtist.textContent = `${getTranslation('artist')}: ${artistName}`;
+                    loginModal.style.display = 'flex';
+                });
+            });
+            
+            // إغلاق نافذة تسجيل الدخول
+            closeModal.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+            });
+            
+            // الانتقال إلى صفحة التسجيل
+            registerBtn.addEventListener('click', function() {
+                window.location.href = REGISTER_URL;
+            });
+            
+            // إغلاق النافذة عند النقر خارجها
+            window.addEventListener('click', function(event) {
+                if (event.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+            });
+            
+            // إظهار الإشعار العائم بعد تأخير
+            setTimeout(() => {
+                floatingNotification.classList.add('show');
+            }, 3000);
+            
+            // إغلاق الإشعار العائم عند النقر عليه
+            floatingNotification.addEventListener('click', function() {
+                this.classList.remove('show');
+            });
+            
+            // إضافة تأثير للملاحة السلسة
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // إضافة تأثيرات للبطاقات عند التمرير
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // تطبيق تأثيرات الظهور على البطاقات
+            const artistCards = document.querySelectorAll('.artist-card');
+            const leakCards = document.querySelectorAll('.leak-card');
+            
+            artistCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s, transform 0.5s';
+                observer.observe(card);
+            });
+            
+            leakCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s, transform 0.5s';
+                observer.observe(card);
+            });
+            
+            // نظام اللغات المتعددة
+            let currentLang = 'ar';
+            
+            // تغيير اللغة عند النقر على الزر ثلاثي الأبعاد
+            languageToggle.addEventListener('click', function() {
+                const newLang = currentLang === 'ar' ? 'en' : 'ar';
+                changeLanguage(newLang);
+            });
+            
+            // دالة تغيير اللغة
+            function changeLanguage(lang) {
+                currentLang = lang;
+                
+                // تحديث جميع العناصر ذات data-lang
+                document.querySelectorAll('[data-lang]').forEach(element => {
+                    if (element.getAttribute('data-lang') === lang) {
+                        element.style.display = element.tagName === 'SPAN' ? 'inline' : 'block';
+                    } else {
+                        element.style.display = 'none';
+                    }
+                });
+                
+                // تحديث اتجاه النص
+                if (lang === 'ar') {
+                    document.documentElement.dir = 'rtl';
+                } else {
+                    document.documentElement.dir = 'ltr';
+                }
+            }
+            
+            // دالة للحصول على ترجمة النص
+            function getTranslation(key) {
+                const translations = {
+                    'artist': {
+                        'ar': 'الفنان',
+                        'en': 'Artist'
+                    }
+                };
+                
+                return translations[key] ? translations[key][currentLang] : key;
+            }
+            
+            // تهيئة اللغة الافتراضية
+            changeLanguage('ar');
+        });
+    </script>
+</body>
+</html>
